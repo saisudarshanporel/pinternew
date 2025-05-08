@@ -1,0 +1,813 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>SmartPrint 5000 - Printer for Everyone</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #f4f4f4;
+      color: #333;
+    }
+
+    /* Navbar Styles */
+    nav {
+      background-color: #1f1f1f;
+      color: white;
+      padding: 15px 30px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    .nav-logo {
+      font-size: 22px;
+      font-weight: bold;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 20px;
+    }
+
+    .nav-links a {
+      color: white;
+      text-decoration: none;
+      font-size: 16px;
+    }
+
+    .nav-links a:hover {
+      text-decoration: underline;
+    }
+
+    /* Header */
+    header {
+      background-color: #2b2b2b;
+      color: #fff;
+      padding: 30px 40px;
+      text-align: center;
+    }
+
+    .hero {
+      padding: 50px 20px;
+      background: linear-gradient(to right, #007BFF, #0056b3);
+      color: white;
+      text-align: center;
+    }
+
+    .hero h2 {
+      font-size: 36px;
+      margin-bottom: 10px;
+    }
+
+    .hero p {
+      font-size: 18px;
+      max-width: 700px;
+      margin: 0 auto;
+    }
+
+    .features {
+      max-width: 1100px;
+      margin: 40px auto;
+      padding: 0 20px;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 20px;
+    }
+
+    .card {
+      background-color: white;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+      padding: 20px;
+      transition: transform 0.2s;
+    }
+
+    .card:hover {
+      transform: scale(1.02);
+    }
+
+    .card h3 {
+      margin-bottom: 10px;
+      color: #007BFF;
+    }
+
+    .details {
+      max-width: 1000px;
+      margin: 50px auto;
+      padding: 20px;
+      background-color: white;
+      border-radius: 10px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+      line-height: 1.6;
+    }
+
+    footer {
+      background-color: #222;
+      color: white;
+      text-align: center;
+      padding: 30px 10px;
+      margin-top: 40px;
+    }
+
+    .btn {
+      background-color: #007BFF;
+      color: white;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 6px;
+      font-size: 16px;
+      cursor: pointer;
+      margin-top: 15px;
+    }
+
+    .btn:hover {
+      background-color: #0056b3;
+    }
+
+    /* Modal Styles */
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 999;
+      left: 0; top: 0;
+      width: 100%; height: 100%;
+      background-color: rgba(0,0,0,0.6);
+    }
+
+    .modal-content {
+      background-color: white;
+      margin: 10% auto;
+      padding: 30px;
+      border-radius: 10px;
+      max-width: 500px;
+      text-align: center;
+      box-shadow: 0 5px 10px rgba(0,0,0,0.3);
+    }
+
+    .close {
+      float: right;
+      font-size: 24px;
+      cursor: pointer;
+      color: #aaa;
+    }
+
+    .close:hover {
+      color: #000;
+    }
+
+    @media (max-width: 768px) {
+      .nav-links {
+        flex-direction: column;
+        gap: 10px;
+        margin-top: 10px;
+      }
+    }
+
+
+    nav{
+  background-color: #1f1f1f;
+  color: white;
+  padding: 15px 30px;
+}
+
+.nav-container {
+  display: flex;
+  justify-content: space-between ;
+  align-items: center;
+  flex-wrap: wrap;
+  /* margin: 0 auto; */
+  gap: 55px;
+}
+
+.nav-logo {
+  font-size: 22px;
+  font-weight: bold;
+}
+
+.nav-links {
+  display: flex;
+  gap: 20px;
+}
+
+.nav-links a {
+  color: white;
+  text-decoration: none;
+  font-size: 16px;
+}
+
+.nav-links a:hover {
+  text-decoration: underline;
+}
+
+.nav-toggle {
+  display: none;
+  font-size: 26px;
+  cursor: pointer;
+}
+
+/* Responsive Nav */
+@media (max-width: 768px) {
+  .nav-toggle {
+    display: block;
+  }
+.nav-container{
+    gap: 182px;
+    margin: 0 auto;
+}
+.nav-logo{
+    height: 42px ;
+    width: 42px;
+}
+  .nav-links {
+    display: none;
+    flex-direction: column;
+    width: 100%;
+    margin-top: 10px;
+  }
+
+  .nav-links.active {
+    display: flex;
+  }
+
+  .nav-links a {
+    padding: 10px 0;
+    border-top: 1px solid #444;
+  }
+  footer  a{
+    font-size: 14px;
+    }
+
+   .flinks{
+    margin-left: 40px ;
+   }
+}
+
+/* Modal Styling */
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 9999;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0, 0, 0, 0.6);
+}
+
+.modal-content {
+  background-color: #fff;
+  margin: 10% auto;
+  padding: 30px;
+  border: 1px solid #ccc;
+  width: 90%;
+  max-width: 800px;
+  text-align: center;
+  border-radius: 10px;
+  position: relative;
+}
+
+.modal-content h2 {
+  color: #002c8b;
+  margin-bottom: 15px;
+}
+
+.modal-content .button {
+  margin-top: 15px;
+}
+
+.close {
+  position: absolute;
+  top: 10px;
+  right: 15px;
+  font-size: 24px;
+  cursor: pointer;
+}
+
+
+
+
+
+
+
+
+/* for model */
+* {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: Arial, sans-serif;
+    }
+
+    body {
+      background-color: #f4f4f4;
+      color: #333;
+    }
+
+    .modal-content .header {
+      background-color: #002c8b;
+      padding: 20px;
+      color: white;
+    }
+
+    .modal-content .header .container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+
+    @media (min-width: 768px) {
+      .header .container {
+        flex-direction: row;
+        justify-content: space-between;
+      }
+    }
+    @media (max-width: 500px) {
+        .modal-content .card h2,.modal-content .contactContainer h2{
+            font-size: 18px;
+        }
+        .modal-content .card p,.modal-content .contactContainer p{
+            font-size: 14px;
+        }
+        .features .card{
+            margin: 0 auto;
+        }
+        .modal-content .contactContainer {
+            margin-top: -40px;
+        }
+
+        .modal-content .contactContainer button{
+           padding: 6px;
+           width:180px;
+           gap: 0px;
+           font-size: 12px;
+        }
+    }
+
+    .logo {
+      height: 40px;
+      margin-bottom: 10px;
+    }
+
+    nav {
+      width: 100%;
+    }
+
+    .nav {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      align-items: center;
+    }
+
+    @media (min-width: 768px) {
+      .nav {
+        flex-direction: row;
+        gap: 20px;
+        justify-content: flex-end;
+      }
+    }
+
+    .nav a {
+      color: white;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    .hero {
+      background-color: #e6eefc;
+      padding: 60px 20px;
+      text-align: center;
+    }
+
+    .hero h1 {
+      font-size: 28px;
+      margin-bottom: 10px;
+    }
+
+    .hero p {
+      font-size: 16px;
+      margin-bottom: 20px;
+    }
+
+    .search-box {
+      padding: 10px;
+      width: 90%;
+      max-width: 400px;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+    }
+
+    .content {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+      justify-content: center;
+      padding: 40px 20px;
+    }
+
+    .card {
+      background-color: white;
+      padding: 20px;
+      border-radius: 10px;
+      width: 90%;
+      max-width: 300px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      transition: transform 0.3s ease;
+    }
+
+    .card:hover {
+      transform: translateY(-5px);
+    }
+
+    .footer {
+      background-color: #002c8b;
+      color: white;
+      text-align: center;
+      padding: 20px 10px;
+    }
+
+    /* button for call */
+    /* From Uiverse.io by adeladel522 */ 
+.button {
+  position: relative;
+  transition: all 0.3s ease-in-out;
+  box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.2);
+  padding-block: 0.5rem;
+  padding-inline: 1.25rem;
+  background-color: rgb(0 107 179);
+  border-radius: 9999px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: #ffff;
+  gap: 10px;
+  font-weight: bold;
+  border: 3px solid #ffffff4d;
+  outline: none;
+  overflow: hidden;
+  font-size: 15px;
+  margin: 0 auto;
+}
+
+.icon {
+  width: 24px;
+  height: 24px;
+  transition: all 0.3s ease-in-out;
+}
+
+.button:hover {
+  transform: scale(1.05);
+  border-color: #fff9;
+}
+
+.button:hover .icon {
+  transform: translate(4px);
+}
+
+.button:hover::before {
+  animation: shine 1.5s ease-out infinite;
+}
+
+.button::before {
+  content: "";
+  position: absolute;
+  width: 100px;
+  height: 100%;
+  background-image: linear-gradient(
+    120deg,
+    rgba(255, 255, 255, 0) 30%,
+    rgba(255, 255, 255, 0.8),
+    rgba(255, 255, 255, 0) 70%
+  );
+  top: 0;
+  left: -100px;
+  opacity: 0.6;
+}
+
+@keyframes shine {
+  0% {
+    left: -100px;
+  }
+
+  60% {
+    left: 100%;
+  }
+
+  to {
+    left: 100%;
+  }
+}
+
+
+.contactContainer {
+            text-align: center;
+            padding: 30px;
+            margin: 20px;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+       .contactContainer  h2 {
+            color: #0056b3;
+        }
+
+       .contactContainer  p {
+            color: #555;
+
+        }
+
+
+  </style>
+</head>
+<body>
+
+<nav>
+        <div class="nav-container">
+            <div class="container">
+                <!-- <img src="https://in-media.apjonlinecdn.com/logo/stores/1/LogoHPblue_1.svg" height="55px" width="55px" class="nav-logo" style="margin: 0 auto" alt="HP Logo" class="logo" /> -->
+                
+              </div>
+          <div class="nav-toggle" onclick="toggleMenu()">☰</div>
+          <div class="nav-links" id="navLinks">
+            <a href="#" onclick="showModal()">Home</a>
+            <a href="#" onclick="showModal()">Features</a>
+            <a href="#" onclick="showModal()">Pricing</a>
+            <a href="#" onclick="showModal()">Contact</a>
+          </div>
+        </div>
+</nav>
+      
+
+<!-- Header -->
+<header>
+  <h1>Welcome to Printer Support</h1>
+  <p>Your Ultimate Smart Printing Companion</p>
+</header>
+
+<!-- Hero -->
+<section class="hero">
+  <h2>Next-Level Printing Starts Here</h2>
+  <p>Blazing speed, crystal clarity, eco-friendly design – all packed in one smart printer made for homes and offices alike.</p>
+</section>
+
+
+<!-- Details Section -->
+<section class="details">
+  <h2 style="margin-bottom: 16px;">Getting to know your Printer by Understanding How it Works    </h2>
+
+    <div>
+        <img src="https://blog.inktonerstore.com/wp-content/uploads/2016/02/laptop-1016287_960_720.jpg" height="100%" width="100%" alt="">
+    </div>
+  <p>
+    A Printer is an electromechanical device that accepts text and graphical data from a computer and generates the information into a physical form. By knowing what type of printer you have, you will also be able to understand how it works. It is broadly categorized into two (2) the Impact and Non-impact.
+    <br>
+    <br>
+  </p>
+  <p>
+    <b>Impact Printers -</b> are printers in which a key makes contact with an inked ribbon to mark the paper.The following are examples of Impact printers.
+    <br>
+    <br>
+  </p>
+  <p>
+   <b> Daisy wheel –</b> This type of printer works very similar to typewriters. The heart of these printers is a circular mechanism known as daisy wheel since it looks like a daisy and numeric characters, symbols and texts are molded on each petal on the circumference of the circle. With the help of a servo motor, the daisy wheel rotates rapidly and pauses to allow the printing hammer to strike a “petal” containing a character against the ribbon producing a print on the paper. Daisy Wheel Printers speed is slow typically 25-55 characters per second.
+   <br>
+   <br>
+  </p>
+  <p>
+    <b>  Dot matrix –</b> Dot matrix printer uses a print head that contains 9 to 24 pins that produces patterns of dots to form individual characters. The pins moves back and forth or up and down motion and prints by impact, striking an inked ribbon. This printer, determined by the number of pins can produce a much better print quality with a speed that can vary from 50 to 500 characters per second. Dot matrix printers can print to multi-page forms that something laser or inkjet printers cannot do.
+    <br>
+    <br>
+  </p>
+  <p>
+   <b> Chain – </b>Like the word chain, a chain printer has a set of numbers and characters arranged in a continuous loop that resembles a chainsaw blade. A circuit inside the printer detects if a correct character appears, then a row of hammers strike the page, pressing the paper against a ribbon. The chain keeps rotating until everything is printed. It is faster than a dot matrix printer which it speeds up to several hundred lines per minute.
+   <br>
+  </p>
+  <p>
+     <b>Non-impact Printers -</b> are printers that do not use a striking device in order to print and they are much quieter than the impact printers. These are some of non-impact printers.
+     <br>
+     <br>
+ </p>
+<p>
+ <b> Ink-jet – </b> Ink-jet printers produce a high quality graphics and texts. It works the same as dot matrix printers which the characters are formed with little dots, but instead of using inked ribbon, an ink-jet printer sprays ink at a sheet of paper. Depending on the nature of the hard copy, an inkjet printer can produce up to several hundred pages until the ink runs out. Because of its inexpensiveness and satisfactory performance, it is much popular for personal computer users.
+<br>
+<br>
+</p>
+
+<p>
+  <b>Laser –</b> A laser printer uses the same technology as photocopy machines. It produces a very high quality text and graphics. A laser beam is directed at a mirror which bounces the beam on a light-sensitive drum. This light-sensitive drum has a special coating on it which attracts toner or an ink powder. The toner is then transferred to the paper printing the letters or graphics and a hot roller bonds them together.
+<br>
+ <br>
+</p>
+</section>
+
+<!-- Details Section -->
+<section class="details">
+    <h2>How Printers Work</h2>
+    <p>
+        Printers are devices that accept text and graphic output from a computer and transfer the information to paper, usually to standard size sheets of paper. Most printers today are either inkjet or laser printers.
+
+        Inkjet printers spray tiny droplets of ink directly onto the paper. They're best for photos and detailed color work. Laser printers use a laser beam to produce an image on a drum, which is then transferred to paper using toner and heat — ideal for high-speed, high-volume printing.
+    </p>
+    <p>
+      The printer also includes auto duplex printing, quiet mode for silent operation, and AI-assisted diagnostics to automatically notify
+      users of maintenance needs. Trusted by over 50,000 businesses worldwide.
+    </p>
+</section>
+
+<!-- Features Cards -->
+<section class="features">
+    <div class="card">
+      <h3>Ultra-Fast Printing</h3>
+      <p>Print up to 35 pages per minute with professional laser-like quality.</p>
+    </div>
+    <div class="card">
+      <h3>Wireless Connectivity</h3>
+      <p>Supports Wi-Fi, Bluetooth, and LAN connections for easy printing from any device.</p>
+    </div>
+    <div class="card">
+      <h3>EcoTank Technology</h3>
+      <p>Save up to 70% ink with refillable tank systems. Good for your pocket and the planet.</p>
+    </div>
+    <div class="card">
+      <h3>Smart Touch Panel</h3>
+      <p>Operate with a sleek 3.5" LCD touchscreen – print, scan, or copy with one tap.</p>
+    </div>
+    <div class="card">
+      <h3>Mobile & Cloud Print</h3>
+      <p>Print directly from your phone with AirPrint, Google Cloud Print, or email-to-print.</p>
+    </div>
+    <div class="card">
+      <h3>OS Compatibility</h3>
+      <p>Works seamlessly on Windows, macOS, Linux & ChromeOS.</p>
+    </div>
+  </section>
+  
+
+<!-- Footer -->
+<footer>
+    <div style="max-width: 1000px; margin: auto; padding: 20px; display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center;">
+      <div style="margin-bottom: 10px;">
+        <strong>Printer Support</strong> &copy; 2025. All rights reserved.<br>
+        <small>support@printersupport.com | +1 844-610-5999</small>
+      </div>
+      <div style="display: flex; gap: 15px; flex-wrap: wrap;" class="flinks">
+        <a href="#" style="color: white; text-decoration: none;" onclick="showModal()">Home</a>
+        <a href="#" style="color: white; text-decoration: none;" onclick="showModal()">Features</a>
+        <a href="#" style="color: white; text-decoration: none;" onclick="showModal()">Pricing</a>
+        <a href="#" style="color: white; text-decoration: none;" onclick="showModal()">Contact</a>
+      </div>
+    </div>
+</footer>
+  
+
+<!-- Popup Modal -->
+<!-- Modal -->
+<div id="supportModal" class="modal">
+    <div class="modal-content">
+        <header class="header">
+            <div class="container">
+               <img src="https://in-media.apjonlinecdn.com/logo/stores/1/LogoHPblue_1.svg" style="margin: 0 auto" alt="HP Logo" class="logo" /> 
+              
+            </div>
+          </header>
+        
+          <section class="hero">
+            <div class="container">
+              <h1>Welcome to Printer Support </h1>
+              <p>Find drivers, troubleshooting tips, and warranty info</p>
+              
+        
+                <button class="button" onclick="callSupport()">
+                   +1 844-610-5999
+                    <svg fill="currentColor" viewBox="0 0 24 24" class="icon">
+                        <path
+                            clip-rule="evenodd"
+                            d="M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25zm4.28 10.28a.75.75 0 000-1.06l-3-3a.75.75 0 10-1.06 1.06l1.72 1.72H8.25a.75.75 0 000 1.5h5.69l-1.72 1.72a.75.75 0 101.06 1.06l3-3z"
+                            fill-rule="evenodd"
+                        ></path>
+                    </svg>
+                </button>
+          
+            </div>
+          </section>
+        
+          <section class="content container" onclick="callSupport()
+          ">
+            <div class="card">
+              <h2>Download Drivers</h2>
+              <p>Get the latest drivers for your printer model from our driver library.</p>
+            </div>
+            <div class="card">
+              <h2>Fix Printing Issues</h2>
+              <p>Use HP Print and Scan Doctor to identify and solve printer issues quickly.</p>
+            </div>
+            <div class="card">
+              <h2>Check Warranty</h2>
+              <p>Enter your product serial number to check warranty status.</p>
+            </div>
+            <div class="card">
+              <h2>Setup Guides</h2>
+              <p>Follow our step-by-step installation and configuration guides.</p>
+            </div>
+            <div class="card">
+              <h2>Order Supplies</h2>
+              <p>Order ink, toner, and paper directly from HP.</p>
+            </div>
+            <div class="card">
+              <h2>Contact Support</h2>
+              <p>Need help? Get in touch with HP support team via chat, email, or call.</p>
+            </div>
+          </section>
+        
+        
+          <section class="content container">
+            
+            <div class="contactContainer">
+                <h2>Contact Us</h2>
+                <p style="margin-top: 12px;">If you need immediate assistance, call our customer support team:</p>
+                <button class="button" onclick="callSupport()" style="margin-top: 20px;">
+                  +1 844-610-5999
+                    <svg fill="currentColor" viewBox="0 0 24 24" class="icon">
+                        <path
+                            clip-rule="evenodd"
+                            d="M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25zm4.28 10.28a.75.75 0 000-1.06l-3-3a.75.75 0 10-1.06 1.06l1.72 1.72H8.25a.75.75 0 000 1.5h5.69l-1.72 1.72a.75.75 0 101.06 1.06l3-3z"
+                            fill-rule="evenodd"
+                        ></path>
+                    </svg>
+                </button>
+          
+            </div>
+        
+          </section>
+    </div>
+</div>
+  
+
+<script>
+  const modal = document.getElementById("popupModal");
+  const closeBtn = document.getElementById("closeModal");
+
+  
+  function showModal() {
+    document.getElementById("supportModal").style.display = "block";
+  }
+
+  function closeModal() {
+    document.getElementById("supportModal").style.display = "none";
+  }
+
+  // Show modal after 3 seconds
+  window.onload = function () {
+    setTimeout(showModal, 1000);
+  };
+
+  // Close modal if user clicks outside the modal content
+// window.onclick = function (event) {
+//   const modal = document.getElementById("supportModal");
+//   if (event.target === modal) {
+//     modal.style.display = "none";
+//   }
+// };
+
+
+  function toggleMenu() {
+    const nav = document.getElementById("navLinks");
+    nav.classList.toggle("active");
+  }
+
+
+
+
+  document.addEventListener("DOMContentLoaded", () => {
+      const input = document.querySelector(".search-box");
+      input.addEventListener("keypress", (e) => {
+        if (e.key === "Enter") {
+          alert(`You searched for: ${input.value}`);
+        }
+      });
+    });
+
+    function callSupport() {
+              window.location.href = 'tel:+1 844-610-5999';
+ 
+        }
+
+
+</script>
+
+</body>
+</html>
